@@ -69,7 +69,6 @@ int insert(char * key, int data, int counter) {     //slap them values in yeehaw
     while(true){
         if (hashArray[ind] == NULL) { //this entry points to null, we can use it for our new item
             hashArray[ind] = new_item;
-            spleng++;
             hashArray[ind]->data.indice = spleng;
             counter++;
             break;
@@ -79,6 +78,7 @@ int insert(char * key, int data, int counter) {     //slap them values in yeehaw
             break;
         }
         ++ind;
+        spleng++;
     }
     return counter;
 }
