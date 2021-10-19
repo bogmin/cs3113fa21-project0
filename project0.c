@@ -14,8 +14,8 @@
 #define HASH_CODE(key) (key % SIZE) //use the modulus operator on our key to make sure we don't go out of bounds of our hash array
 
 typedef struct hashBlock {	//struct definition
-	char key[5];
-	int data;
+    char key[5];
+    int data;
 }hashBlock;
 
 hashBlock* hashArray[SIZE];//initializing
@@ -24,30 +24,30 @@ hashBlock* hashArray[SIZE];//initializing
 uint64_t key_to_int(char * key_arr_ptr) {
     uint64_t to_return = 0; //initialize the integer to 0
     memcpy(&to_return, key_arr_ptr, 5);
-    return to_return; 
+    return to_return;
 }
 
 
 hashBlock * search(char * key) {    //searches for a given key
-   uint64_t key_int = key_to_int(key);
-   uint64_t ind = HASH_CODE(key_int); //get a valid index from the provided key
-	
-   //move in array until an empty 
+    uint64_t key_int = key_to_int(key);
+    uint64_t ind = HASH_CODE(key_int); //get a valid index from the provided key
+
+    //move in array until an empty
     while(hashArray[ind] != NULL) {
-	
+
         if (memcmp(hashArray[ind]->key, key, 5) == 0){
             return hashArray[ind];
         }
-			
-      ind++; //go to the next index
-      ind %= SIZE; //wrap-around the table
-    }        
-    
-    return NULL;        
+
+        ind++; //go to the next index
+        ind %= SIZE; //wrap-around the table
+    }
+
+    return NULL;
 }
 
 
-void bubbleSort(int i){ //sorts hashArray for printing
+/*void bubbleSort(int i){ //sorts hashArray for printing
     int j, k;
     hashBlock* temp;
 
@@ -60,12 +60,12 @@ void bubbleSort(int i){ //sorts hashArray for printing
             }
         }
     }
-}
+}*/
 
-void insert(char * key, int data) {     //slap them values in yeehaw
+void insert(char * key, int data, int counter) {     //slap them values in yeehaw
     //allocate memory for the new item in the hash array
     hashBlock * new_item = malloc(sizeof(hashBlock));
-    int counter = 0; //track number of occupied cells for sorting
+    //  int counter = 0; //track number of occupied cells for sorting
 
     //copy the data passed in, into the new item
     new_item->data = data;
@@ -88,15 +88,15 @@ void insert(char * key, int data) {     //slap them values in yeehaw
         }
         ++ind;
     }
-    bubbleSort(counter);
+    //   bubbleSort(counter);
 }
 
 
 void print() {	//prints out the hash table in a sorted manner
-	int i = 0;
-	for (i = 0; i < SIZE; i++) {
-		if (hashArray[i] != NULL) {
-			printf("%s->%d\n", hashArray[i]->key, hashArray[i]->data);
+    int i = 0;
+    for (i = 0; i < SIZE; i++) {
+        if (hashArray[i] != NULL) {
+            printf("%s->%d\n", hashArray[i]->key, hashArray[i]->data);
         }
         /*
         else {
@@ -105,40 +105,48 @@ void print() {	//prints out the hash table in a sorted manner
 			break;
 		}*/
 
-	}
+    }
+}
+
+int comp (const void *elem1, const void *elem2){
+    hashBlock *a1 = (hashBlock *)elem1;
+    hashBlock *a2 = (hashBlock *)elem2;
+
+    return (a1->data - a2->data);
 }
 int main() {
     //struct hashBlock* hashArray;
     int i;
+    int counter = 0;
     hashBlock * item;
-   
+
     char c[5];
     int valid_bytes = 0;
-  
+
     while (!feof(stdin)){
         memset(c, 0, sizeof(c)); //clear the previous contents of c
-        
-    /*   scanf("%c", &c[0]);
-        if ((c[0] & 0x80) == 0) { //this unicode character is only one byte
-            valid_bytes = 1;
-            
-        }
-        else if ((c[0] & 0xC0) == 0x80) { //this unicode character is two bytes
-            scanf("%c", &c[1]);
-            valid_bytes = 2;
-            
-        }
-        else if ((c[0] & 0xE0) == 0xC0) { //this unicode character is three bytes
-            scanf("%c", &c[1]);
-            scanf("%c", &c[2]);
-            valid_bytes = 3;
-        }
-        else if ((c[0] & 0xF0) == 0xE0) { //this unicode character is four bytes
-            scanf("%c", &c[1]);
-            scanf("%c", &c[2]);
-            scanf("%c", &c[3]);
-            valid_bytes = 4;
-        */
+
+        /*   scanf("%c", &c[0]);
+            if ((c[0] & 0x80) == 0) { //this unicode character is only one byte
+                valid_bytes = 1;
+
+            }
+            else if ((c[0] & 0xC0) == 0x80) { //this unicode character is two bytes
+                scanf("%c", &c[1]);
+                valid_bytes = 2;
+
+            }
+            else if ((c[0] & 0xE0) == 0xC0) { //this unicode character is three bytes
+                scanf("%c", &c[1]);
+                scanf("%c", &c[2]);
+                valid_bytes = 3;
+            }
+            else if ((c[0] & 0xF0) == 0xE0) { //this unicode character is four bytes
+                scanf("%c", &c[1]);
+                scanf("%c", &c[2]);
+                scanf("%c", &c[3]);
+                valid_bytes = 4;
+            */
 
         scanf("%c",&c[0]);
         if ((int) c[0] > 239){
@@ -150,21 +158,22 @@ int main() {
         else if((int) c[0] > 191){
             scanf("%c", &c[1]);
         }
-       // else { //this is an error case
-         //   printf("Error: invalid unicode byte detected\n");
+        // else { //this is an error case
+        //   printf("Error: invalid unicode byte detected\n");
         //}
-        
+
         item = search(c);
         if (item != NULL) {
             item->data++;
-            
+
         }
         else { //the character doesn't exist yet
-            insert(c, 1);  
+            insert(c, 1, counter);
         }
-       
+
     }
-  //  bubbleSort(hashArray);
+    //  bubbleSort(hashArray);
+    qsort(hashArray, counter, sizeof(hashBlock), comp);
     print();
 }
 
