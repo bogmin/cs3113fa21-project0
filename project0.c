@@ -13,9 +13,14 @@
 #define SIZE 300000  //defining a size as i am too much of a smallbrain to figure out dynamically re-sized hash tables in C
 #define HASH_CODE(key) (key % SIZE) //use the modulus operator on our key to make sure we don't go out of bounds of our hash array
 
+typedef struct data_t {
+    int num_occurrences;
+    int indice;
+} data_t;
+
 typedef struct hashBlock {	//struct definition
     char key[5];
-    int data;
+    data_t data;
 }hashBlock;
 
 hashBlock* hashArray[SIZE];//initializing
@@ -68,7 +73,7 @@ int insert(char * key, int data, int counter) {     //slap them values in yeehaw
     //  int counter = 0; //track number of occupied cells for sorting
 
     //copy the data passed in, into the new item
-    new_item->data = data;
+    new_item->data.num_occurrences = data;
     memcpy(new_item->key, key, 5);
 
     //get the hash index
@@ -79,11 +84,12 @@ int insert(char * key, int data, int counter) {     //slap them values in yeehaw
     while(true){
         if (hashArray[ind] == NULL) { //this entry points to null, we can use it for our new item
             hashArray[ind] = new_item;
+            hashArray[ind]->data.indice = ind;
             counter++;
             break;
         }
         else if (key_to_int(hashArray[ind]->key) == key_int) { //this entry is being used and equals the key being read in
-            hashArray[ind]->data = hashArray[ind]->data + 1;
+            hashArray[ind]->data.num_occurrences = hashArray[ind]->data.num_occurrences + 1;
             break;
         }
         ++ind;
@@ -93,10 +99,10 @@ int insert(char * key, int data, int counter) {     //slap them values in yeehaw
 
 
 void print() {	//prints out the hash table in a sorted manner
-    int i = 0;
+    int i;
     for (i = 0; i < SIZE; i++) {
         if (hashArray[i] != NULL) {
-            printf("%s->%d\n", hashArray[i]->key, hashArray[i]->data);
+            printf("%s->%d\n", hashArray[i]->key, hashArray[i]->data.num_occurrences);
         }
         /*
         else {
@@ -108,11 +114,24 @@ void print() {	//prints out the hash table in a sorted manner
     }
 }
 
-int comp (const void *elem1, const void *elem2){
-    hashBlock *a1 = (hashBlock *)elem1;
-    hashBlock *a2 = (hashBlock *)elem2;
-
-    return (a2->data - a1->data);
+int comp (const hashBlock * ele1, const hashBlock * ele2){
+    if (ele1->data.num_occurrences > ele2->data.num_occurrences){
+        return 1;
+    }
+    else if (ele2->data.num_occurrences > ele1->data.num_occurrences){
+        return -1;
+    }
+    else{
+        if (ele1->data.indice > ele2->data.indice){
+            return 1;
+        }
+        else if (ele2->data.indice > ele1->data.indice){
+            return -1;
+        }
+        else{
+            return 0;
+        }
+    }
 }
 int main() {
     //struct hashBlock* hashArray;
@@ -164,7 +183,7 @@ int main() {
 
         item = search(c);
         if (item != NULL) {
-            item->data++;
+            item->data.num_occurrences++;
 
         }
         else { //the character doesn't exist yet
