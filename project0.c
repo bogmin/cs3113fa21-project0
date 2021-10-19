@@ -62,7 +62,7 @@ void bubbleSort(int i){ //sorts hashArray for printing
     }
 }
 
-int insert(char * key, int data, int counter) {     //slap them values in yeehaw
+void insert(char * key, int data, int *counter) {     //slap them values in yeehaw
     //allocate memory for the new item in the hash array
     hashBlock * new_item = malloc(sizeof(hashBlock));
     //  int counter = 0; //track number of occupied cells for sorting
@@ -79,7 +79,7 @@ int insert(char * key, int data, int counter) {     //slap them values in yeehaw
     while(true){
         if (hashArray[ind] == NULL) { //this entry points to null, we can use it for our new item
             hashArray[ind] = new_item;
-            counter++;
+            (*counter)++;
             break;
         }
         else if (key_to_int(hashArray[ind]->key) == key_int) { //this entry is being used and equals the key being read in
@@ -88,7 +88,7 @@ int insert(char * key, int data, int counter) {     //slap them values in yeehaw
         }
         ++ind;
     }
-    return counter;
+
 }
 
 
@@ -118,6 +118,7 @@ int main() {
     //struct hashBlock* hashArray;
     int i;
     int counter = 0;
+    int *value = &counter;
     hashBlock * item;
 
     char c[5];
@@ -168,7 +169,7 @@ int main() {
 
         }
         else { //the character doesn't exist yet
-            insert(c, 1, counter);
+            insert(c, 1, value);
         }
 
     }
