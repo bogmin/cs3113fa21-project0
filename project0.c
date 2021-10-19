@@ -54,6 +54,7 @@ hashBlock * search(char * key) {    //searches for a given key
 int insert(char * key, int data, int counter) {     //slap them values in yeehaw
     //allocate memory for the new item in the hash array
     hashBlock * new_item = malloc(sizeof(hashBlock));
+    int spleng = 0;
     //  int counter = 0; //track number of occupied cells for sorting
 
     //copy the data passed in, into the new item
@@ -68,7 +69,8 @@ int insert(char * key, int data, int counter) {     //slap them values in yeehaw
     while(true){
         if (hashArray[ind] == NULL) { //this entry points to null, we can use it for our new item
             hashArray[ind] = new_item;
-            hashArray[ind]->data.indice = ind;
+            spleng++;
+            hashArray[ind]->data.indice = spleng;
             counter++;
             break;
         }
