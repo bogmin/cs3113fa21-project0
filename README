@@ -1,0 +1,4 @@
+Andrew McGuffin
+Code can be compiled and run in the terminal or through an IDE.
+BUGS: sometimes the bubbleSort function doesn't work quite as expected. I'm not exactly sure what causes it; it hasn't caused any crashes for me or anything, but occasionally things don't sort correctly.
+ASSUMPTIONS: that the file input will be shoved in through stdin, as detailed in the project description
