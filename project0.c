@@ -47,7 +47,7 @@ hashBlock * search(char * key) {    //searches for a given key
 }
 
 
-void bubbleSort(int i){ //sorts hashArray for printing
+/*void bubbleSort(int i){ //sorts hashArray for printing
     int j, k;
     hashBlock* temp;
 
@@ -60,9 +60,9 @@ void bubbleSort(int i){ //sorts hashArray for printing
             }
         }
     }
-}
+}*/
 
-void insert(char * key, int data, int *counter) {     //slap them values in yeehaw
+int insert(char * key, int data, int counter) {     //slap them values in yeehaw
     //allocate memory for the new item in the hash array
     hashBlock * new_item = malloc(sizeof(hashBlock));
     //  int counter = 0; //track number of occupied cells for sorting
@@ -79,7 +79,7 @@ void insert(char * key, int data, int *counter) {     //slap them values in yeeh
     while(true){
         if (hashArray[ind] == NULL) { //this entry points to null, we can use it for our new item
             hashArray[ind] = new_item;
-            (*counter)++;
+            counter++;
             break;
         }
         else if (key_to_int(hashArray[ind]->key) == key_int) { //this entry is being used and equals the key being read in
@@ -88,7 +88,7 @@ void insert(char * key, int data, int *counter) {     //slap them values in yeeh
         }
         ++ind;
     }
-
+    return counter;
 }
 
 
@@ -118,11 +118,10 @@ int main() {
     //struct hashBlock* hashArray;
     int i;
     int counter = 0;
-    int *value = &counter;
     hashBlock * item;
 
     char c[5];
-    int valid_bytes = 0;
+    int value = 0;
 
     while (!feof(stdin)){
         memset(c, 0, sizeof(c)); //clear the previous contents of c
@@ -169,12 +168,13 @@ int main() {
 
         }
         else { //the character doesn't exist yet
-            insert(c, 1, value);
+            insert(c, 1, counter);
+            value = value + counter;
         }
 
     }
-     bubbleSort(counter);
-   // qsort(hashArray, counter, sizeof(hashBlock), comp);
+    //  bubbleSort(hashArray);
+    qsort(hashArray, value, sizeof(hashBlock), comp);
     print();
 }
 
