@@ -145,7 +145,7 @@ int main() {
 
     }
     //  bubbleSort(hashArray);
-    qsort(hashArray, SIZE, sizeof(hashBlock), comp);
+    qsort(hashArray, value, sizeof(hashBlock), comp);
     print();
 }
 

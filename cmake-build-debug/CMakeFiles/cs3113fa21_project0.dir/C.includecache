@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/Andrew/Documents/GitHub/cs3113fa21-project0/project0.c
+stdio.h
+-
+string.h
+-
+stdlib.h
+-
+stdbool.h
+-
+stdint.h
+-
+
