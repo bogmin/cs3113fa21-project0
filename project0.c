@@ -91,7 +91,7 @@ void print() {	//prints out the hash table in a sorted manner
     }
 }
 
-int comp (const void * ele1, const void * ele2){
+int comp (const hashBlock * ele1, const hashBlock * ele2){
     if (ele1->data.num_occurrences > ele2->data.num_occurrences){
         return 1;
     }
@@ -139,8 +139,8 @@ int main() {
 
         }
         else { //the character doesn't exist yet
-            insert(c, 1, counter);
-            value = value + counter;
+           // insert(c, 1, counter);
+            value = value + insert(c, 1, counter);
         }
 
     }
