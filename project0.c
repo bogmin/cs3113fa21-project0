@@ -96,7 +96,7 @@ void print() {	//prints out the hash table in a sorted manner
 	int i = 0;
 	for (i = 0; i < SIZE; i++) {
 		if (hashArray[i] != NULL) {
-			printf("%s"->"%d\n", hashArray[i]->key, hashArray[i]->data);
+			printf("%s->%d\n", hashArray[i]->key, hashArray[i]->data);
         }
         /*
         else {
