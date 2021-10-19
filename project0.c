@@ -64,12 +64,12 @@ void bubbleSort(int i){ //sorts hashArray for printing
 
 void insert(char * key, int data) {     //slap them values in yeehaw
     //allocate memory for the new item in the hash array
- //   hashBlock * new_item = malloc(sizeof(hashBlock));
+    hashBlock * new_item = malloc(sizeof(hashBlock));
     int counter = 0; //track number of occupied cells for sorting
 
     //copy the data passed in, into the new item
-   // new_item->data = data;
- //   memcpy(new_item->key, key, 5);
+    new_item->data = data;
+    memcpy(new_item->key, key, 5);
 
     //get the hash index
     uint64_t key_int = key_to_int(key); //turn the key into an integer representation
@@ -78,8 +78,7 @@ void insert(char * key, int data) {     //slap them values in yeehaw
     //move in array until an empty or deleted cell
     while(true){
         if (hashArray[ind] == NULL) { //this entry points to null, we can use it for our new item
-            hashArray[ind]->key = key;
-            hashArray[ind]->data = data;
+            hashArray[ind] = new_item;
             counter++;
             break;
         }
