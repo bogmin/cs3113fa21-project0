@@ -112,7 +112,7 @@ int comp (const void *elem1, const void *elem2){
     hashBlock *a1 = (hashBlock *)elem1;
     hashBlock *a2 = (hashBlock *)elem2;
 
-    return (a1->data - a2->data);
+    return (a2->data - a1->data);
 }
 int main() {
     //struct hashBlock* hashArray;
