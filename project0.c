@@ -46,22 +46,6 @@ hashBlock * search(char * key) {    //searches for a given key
     return NULL;
 }
 
-
-/*void bubbleSort(int i){ //sorts hashArray for printing
-    int j, k;
-    hashBlock* temp;
-
-    for (j = 0; j < i - 1; j++){
-        for (k = 0; k < (i - 1 - j); k++){
-            if (hashArray[k]->data < hashArray[k + 1]->data){
-                temp = hashArray[k];
-                hashArray[k] = hashArray[k+1];
-                hashArray[k+1] = temp;
-            }
-        }
-    }
-}*/
-
 void insert(char * key, int data, int counter) {     //slap them values in yeehaw
     //allocate memory for the new item in the hash array
     hashBlock * new_item = malloc(sizeof(hashBlock));
