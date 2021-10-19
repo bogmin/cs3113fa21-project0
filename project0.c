@@ -46,7 +46,23 @@ hashBlock * search(char * key) {    //searches for a given key
     return NULL;
 }
 
-void insert(char * key, int data, int counter) {     //slap them values in yeehaw
+
+void bubbleSort(int i){ //sorts hashArray for printing
+    int j, k;
+    hashBlock* temp;
+
+    for (j = 0; j < i - 1; j++){
+        for (k = 0; k < (i - 1 - j); k++){
+            if (hashArray[k]->data < hashArray[k + 1]->data){
+                temp = hashArray[k];
+                hashArray[k] = hashArray[k+1];
+                hashArray[k+1] = temp;
+            }
+        }
+    }
+}
+
+int insert(char * key, int data, int counter) {     //slap them values in yeehaw
     //allocate memory for the new item in the hash array
     hashBlock * new_item = malloc(sizeof(hashBlock));
     //  int counter = 0; //track number of occupied cells for sorting
@@ -72,7 +88,7 @@ void insert(char * key, int data, int counter) {     //slap them values in yeeha
         }
         ++ind;
     }
-    //   bubbleSort(counter);
+    return counter;
 }
 
 
@@ -156,8 +172,8 @@ int main() {
         }
 
     }
-    //  bubbleSort(hashArray);
-    qsort(hashArray, counter, sizeof(hashBlock), comp);
+     bubbleSort(counter);
+   // qsort(hashArray, counter, sizeof(hashBlock), comp);
     print();
 }
 
