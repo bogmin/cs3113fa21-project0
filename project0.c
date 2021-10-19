@@ -118,7 +118,7 @@ int main() {
     while (!feof(stdin)){
         memset(c, 0, sizeof(c)); //clear the previous contents of c
         
-        scanf("%c", &c[0]);
+    /*   scanf("%c", &c[0]);
         if ((c[0] & 0x80) == 0) { //this unicode character is only one byte
             valid_bytes = 1;
             
@@ -138,11 +138,21 @@ int main() {
             scanf("%c", &c[2]);
             scanf("%c", &c[3]);
             valid_bytes = 4;
-            
+        */
+
+        scanf("%c",&c[0]);
+        if ((int) c[0] > 239){
+            scanf("%3s", &c[1]);
         }
-        else { //this is an error case
-            printf("Error: invalid unicode byte detected\n");
+        else if ((int) c[0] > 223){
+            scanf("%2s", &c[1]);
         }
+        else if((int) c[0] > 191){
+            scanf("%c", &c[1]);
+        }
+       // else { //this is an error case
+         //   printf("Error: invalid unicode byte detected\n");
+        //}
         
         item = search(c);
         if (item != NULL) {
