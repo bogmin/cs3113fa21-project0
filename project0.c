@@ -35,17 +35,16 @@ uint64_t key_to_int(char * key_arr_ptr) {
 
 hashBlock * search(char * key) {    //searches for a given key
     uint64_t key_int = key_to_int(key);
-    uint64_t ind = HASH_CODE(key_int); //get a valid index from the provided key
+    uint64_t ind = 0; //get a valid index from the provided key
 
     //move in array until an empty
     while (hashArray[ind] != NULL) {
 
-        if (memcmp(hashArray[ind]->key, key, 5) == 0) {
+        if (key_int == key_to_int(hashArray[ind]->key)) {
             return hashArray[ind];
         }
 
         ind++; //go to the next index
-        ind %= SIZE; //wrap-around the table
     }
 
     return NULL;
@@ -72,9 +71,6 @@ void insert(char * key, data_t * data) {     //slap them values in yeehaw
         }
         //go to next cell
         ++ind;
-
-        //wrap around the table
-        ind %= SIZE;
     }
 	
    hashArray[ind] = new_item;
@@ -104,24 +100,30 @@ void swap(int ind1, int ind2){
 
 
 
-int comp (const hashBlock * ele1, const hashBlock * ele2){
-    if (ele1->data.num_occurrences > ele2->data.num_occurrences){
+int comp (const void * ele1, const void * ele2){
+      hashBlock *a1 = (hashBlock *)ele1;
+     hashBlock *a2 = (hashBlock *)ele2;
+   // int a1 = ((struct hashBlock *)ele1)->data.num_occurrences;
+   // int a2 = ((struct hashBlock *)ele2)->data.num_occurrences;
+
+  /*  if (a1->data.num_occurrences > a2->data.num_occurrences){
         return 1;
     }
-    else if (ele2->data.num_occurrences > ele1->data.num_occurrences){
+    else if (a2->data.num_occurrences > a1->data.num_occurrences){
         return -1;
     }
     else{
-        if (ele1->data.indice > ele2->data.indice){
+        if (a1->data.indice > a2->data.indice){
             return -1;
         }
-        else if (ele2->data.indice > ele1->data.indice){
+        else if (a2->data.indice > a1->data.indice){
             return 1;
         }
         else{
             return 0;
         }
-    }
+    }*/
+  return (a2->data.indice - a1->data.indice);
 }
 
 void sort(int length){
@@ -142,10 +144,11 @@ void sort(int length){
 
 int main() {
     //struct hashBlock* hashArray;
-    int i;
-  //  int counter = 0;
+    int i = 0;
+    int counter = 0;
     hashBlock * item;
     data_t data;
+    int tracka = 0;
 
     char c[5];
     int ind = 0;
@@ -172,7 +175,7 @@ int main() {
         }
         else { //the character doesn't exist yet
             data.num_occurrences = 1;
-            data.indice = ind;
+            data.indice = tracka;
             insert(c, &data);
             //value = value + insert(c, 1);
         }
@@ -180,10 +183,14 @@ int main() {
     }
     //  bubbleSort(hashArray);
     //print();
-    for (i=0; i<ind;i++){
-        sort(ind);
+ //   for (i=0; i<ind;i++){
+   //     sort(ind);
+    while(hashArray[i] != NULL){
+        i++;
+        counter++;
     }
-    //qsort(hashArray, value, sizeof(hashBlock), comp);
+    qsort(hashArray, counter, sizeof(hashBlock), comp);
     print();
-}
+    }
+
 
