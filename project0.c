@@ -51,10 +51,10 @@ hashBlock * search(char * key) {    //searches for a given key
     return NULL;
 }
 
-int insert(char * key, int data, int counter) {     //slap them values in yeehaw
+int insert(char * key, int data) {     //slap them values in yeehaw
     //allocate memory for the new item in the hash array
     hashBlock * new_item = malloc(sizeof(hashBlock));
-    int spleng = 0;
+    int counter = 0;
     //  int counter = 0; //track number of occupied cells for sorting
 
     //copy the data passed in, into the new item
@@ -69,7 +69,7 @@ int insert(char * key, int data, int counter) {     //slap them values in yeehaw
     while(true){
         if (hashArray[ind] == NULL) { //this entry points to null, we can use it for our new item
             hashArray[ind] = new_item;
-            hashArray[ind]->data.indice = spleng;
+            hashArray[ind]->data.indice = ind;
             counter++;
             break;
         }
@@ -78,7 +78,6 @@ int insert(char * key, int data, int counter) {     //slap them values in yeehaw
             break;
         }
         ++ind;
-        spleng++;
     }
     return counter;
 }
@@ -101,10 +100,10 @@ int comp (const hashBlock * ele1, const hashBlock * ele2){
         return -1;
     }
     else{
-        if (ele2->data.indice > ele1->data.indice){
+        if (ele1->data.indice > ele2->data.indice){
             return 1;
         }
-        else if (ele1->data.indice > ele2->data.indice){
+        else if (ele2->data.indice > ele1->data.indice){
             return -1;
         }
         else{
@@ -115,7 +114,7 @@ int comp (const hashBlock * ele1, const hashBlock * ele2){
 int main() {
     //struct hashBlock* hashArray;
     int i;
-    int counter = 0;
+  //  int counter = 0;
     hashBlock * item;
 
     char c[5];
@@ -142,7 +141,7 @@ int main() {
         }
         else { //the character doesn't exist yet
            // insert(c, 1, counter);
-            value = value + insert(c, 1, counter);
+            value = value + insert(c, 1);
         }
 
     }
