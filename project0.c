@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <stdint.h>
+#include <time.h>
 
 //TODO:
 // write search function
@@ -51,7 +52,7 @@ hashBlock * search(char * key) {    //searches for a given key
     return NULL;
 }
 
-void insert(char * key, data_t * data, int * count) {     //slap them values in yeehaw
+void insert(char * key, data_t * data) {     //slap them values in yeehaw
     //allocate memory for the new item in the hash array
     hashBlock * new_item = malloc(sizeof(hashBlock));
     //  int counter = 0; //track number of occupied cells for sorting
@@ -72,7 +73,7 @@ void insert(char * key, data_t * data, int * count) {     //slap them values in 
         //wrap around the table
         ind %= SIZE;
     }
-    (*count)++;
+
    hashArray[ind] = new_item;
 }
 
@@ -120,12 +121,12 @@ int comp (const hashBlock * ele1, const hashBlock * ele2){
     }
 }
 
-void sort(int count){
+void sort(){
     int i,j,c,k;
     
-    for (i=0; i<count; i++){
+    for (i=0; i<SIZE; i++){
         if (hashArray[i] != NULL){
-            for (j=0; j<count; j++){
+            for (j=0; j<SIZE; j++){
                 if (hashArray[j] != NULL){ //two non-null entries have been found
                     if (comp(hashArray[i],hashArray[j]) == 1){
                         swap(i,j);
@@ -136,8 +137,11 @@ void sort(int count){
     }
 }
 
+
+
 int main() {
     //struct hashBlock* hashArray;
+ //   clock_t start = clock();
     int i;
     int counter = 0;
     hashBlock * item;
@@ -169,7 +173,7 @@ int main() {
         else { //the character doesn't exist yet
             data.num_occurrences = 1;
             data.indice = ind;
-            insert(c, &data, &counter);
+            insert(c, &data);
             //value = value + insert(c, 1);
         }
 
@@ -177,9 +181,12 @@ int main() {
     //  bubbleSort(hashArray);
     //print();
     for (i=0; i<ind;i++){
-        sort(counter);
+        sort();
     }
     //qsort(hashArray, value, sizeof(hashBlock), comp);
     print();
+ //   clock_t stop = clock();
+  //  double elapsed = (double)(stop - start) / CLOCKS_PER_SEC;
+  //  printf("\nTime elapsed: %.5f\n", elapsed);
 }
 

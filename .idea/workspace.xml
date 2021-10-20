@@ -53,7 +53,7 @@
         <option name="CLION.EXTERNAL.BUILD" enabled="true" />
       </method>
     </configuration>
-    <configuration name="cs3113fa21_project0" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cs3113fa21_project0" TARGET_NAME="cs3113fa21_project0" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cs3113fa21_project0" RUN_TARGET_NAME="cs3113fa21_project0">
+    <configuration name="cs3113fa21_project0" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="true" REDIRECT_INPUT_PATH="$USER_HOME$/Desktop/cs3113/proj0/Project0/utf8.txt" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cs3113fa21_project0" TARGET_NAME="cs3113fa21_project0" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cs3113fa21_project0" RUN_TARGET_NAME="cs3113fa21_project0">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -72,7 +72,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1634664827497</updated>
-      <workItem from="1634664836089" duration="12594000" />
+      <workItem from="1634664836089" duration="15191000" />
     </task>
     <servers />
   </component>
