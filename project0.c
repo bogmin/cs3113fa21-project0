@@ -101,10 +101,10 @@ int comp (const hashBlock * ele1, const hashBlock * ele2){
         return -1;
     }
     else{
-        if (ele1->data.indice > ele2->data.indice){
+        if (ele2->data.indice > ele1->data.indice){
             return 1;
         }
-        else if (ele2->data.indice > ele1->data.indice){
+        else if (ele1->data.indice > ele2->data.indice){
             return -1;
         }
         else{
