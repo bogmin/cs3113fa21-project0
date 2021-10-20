@@ -120,7 +120,7 @@ int comp (const hashBlock * ele1, const hashBlock * ele2){
     }
 }
 
-void sort(){
+/*void sort(){
     int i,j,c,k;
     
     for (i=0; i<SIZE; i++){
@@ -135,7 +135,7 @@ void sort(){
         }
     }
 }
-
+*/
 int main() {
     //struct hashBlock* hashArray;
     int i;
@@ -176,9 +176,9 @@ int main() {
     }
     //  bubbleSort(hashArray);
     //print();
-    for (i=0; i<ind;i++){
-        sort();
-    }
+   // for (i=0; i<ind;i++){
+   //     sort();
+  //  }
     //qsort(hashArray, value, sizeof(hashBlock), comp);
     print();
 }
