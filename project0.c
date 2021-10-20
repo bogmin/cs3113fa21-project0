@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <stdint.h>
-#include <time.h>
 
 //TODO:
 // write search function
@@ -63,17 +62,21 @@ void insert(char * key, data_t * data) {     //slap them values in yeehaw
 
    //get the hash index
    uint64_t key_int = key_to_int(key); //turn the key into an integer representation
-   uint64_t ind = HASH_CODE(key_int); //get the hash index for this key value
+   uint64_t ind = 0; //get the hash index for this key value
 
     //move in array until an empty or deleted cell
     while(hashArray[ind] != NULL) {
+        if(key_int == key_to_int(hashArray[ind]->key)){
+            hashArray[ind]->data.num_occurrences = hashArray[ind]->data.num_occurrences + 1;
+            return;
+        }
         //go to next cell
         ++ind;
 
         //wrap around the table
         ind %= SIZE;
     }
-
+	
    hashArray[ind] = new_item;
 }
 
@@ -98,31 +101,21 @@ void swap(int ind1, int ind2){
         hashArray[ind2] = temp;
     } 
 }
-/*int comp (const void * ele1, const void * ele2){
-    int a1 = ((struct hashBlock *)ele1)->data.num_occurrences;
-    int a2 = ((struct hashBlock *)ele2)->data.num_occurrences;
 
-    return (a1 - a2);
-}
-*/
 
-int comp (const void * ele1, const void * ele2){
-  //  hashBlock *a1 = (hashBlock *)ele1;
-   // hashBlock *a2 = (hashBlock *)ele2;
-    int a1 = ((struct hashBlock *)ele1)->data.num_occurrences;
-    int a2 = ((struct hashBlock *)ele2)->data.num_occurrences;
 
-    if (a1 > a2){
+int comp (const hashBlock * ele1, const hashBlock * ele2){
+    if (ele1->data.num_occurrences > ele2->data.num_occurrences){
         return 1;
     }
-    else if (a2 > a1){
+    else if (ele2->data.num_occurrences > ele1->data.num_occurrences){
         return -1;
     }
     else{
-        if (a1 > a2){
+        if (ele1->data.indice > ele2->data.indice){
             return -1;
         }
-        else if (a2 > a1){
+        else if (ele2->data.indice > ele1->data.indice){
             return 1;
         }
         else{
@@ -131,12 +124,12 @@ int comp (const void * ele1, const void * ele2){
     }
 }
 
-void sort(){
-    int i,j,c,k;
+void sort(int length){
+    int i,j;
     
-    for (i=0; i<SIZE; i++){
+    for (i=0; i<length; i++){
         if (hashArray[i] != NULL){
-            for (j=0; j<SIZE; j++){
+            for (j=0; j<length; j++){
                 if (hashArray[j] != NULL){ //two non-null entries have been found
                     if (comp(hashArray[i],hashArray[j]) == 1){
                         swap(i,j);
@@ -147,13 +140,10 @@ void sort(){
     }
 }
 
-
-
 int main() {
     //struct hashBlock* hashArray;
- //   clock_t start = clock();
-    int i = 0;
-    int counter = 0;
+    int i;
+  //  int counter = 0;
     hashBlock * item;
     data_t data;
 
@@ -190,21 +180,10 @@ int main() {
     }
     //  bubbleSort(hashArray);
     //print();
-  //  for (i=0; i<ind;i++){
-   //     sort();
-
-
-   //while(hashArray[ind] != NULL){
-     //  counter++;
-       //i++;
-  // }
- // counter = sizeof hashArray / sizeof hashArray[0];
-
-    qsort(hashArray[0], ind, sizeof(hashBlock[0]), comp);
-    print();
+    for (i=0; i<ind;i++){
+        sort(ind);
     }
- //   clock_t stop = clock();
-  //  double elapsed = (double)(stop - start) / CLOCKS_PER_SEC;
-  //  printf("\nTime elapsed: %.5f\n", elapsed);
-
+    //qsort(hashArray, value, sizeof(hashBlock), comp);
+    print();
+}
 
