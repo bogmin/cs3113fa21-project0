@@ -71,7 +71,7 @@ int insert(char * key, int data) {     //slap them values in yeehaw
             hashArray[ind] = new_item;
             hashArray[ind]->data.indice = ind;
             counter++;
-            break;
+            return counter;
         }
         else if (key_to_int(hashArray[ind]->key) == key_int) { //this entry is being used and equals the key being read in
             hashArray[ind]->data.num_occurrences = hashArray[ind]->data.num_occurrences + 1;
