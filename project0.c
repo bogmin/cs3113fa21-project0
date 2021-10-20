@@ -98,21 +98,31 @@ void swap(int ind1, int ind2){
         hashArray[ind2] = temp;
     } 
 }
+/*int comp (const void * ele1, const void * ele2){
+    int a1 = ((struct hashBlock *)ele1)->data.num_occurrences;
+    int a2 = ((struct hashBlock *)ele2)->data.num_occurrences;
 
+    return (a1 - a2);
+}
+*/
 
+int comp (const void * ele1, const void * ele2){
+  //  hashBlock *a1 = (hashBlock *)ele1;
+   // hashBlock *a2 = (hashBlock *)ele2;
+    int a1 = ((struct hashBlock *)ele1)->data.num_occurrences;
+    int a2 = ((struct hashBlock *)ele2)->data.num_occurrences;
 
-int comp (const hashBlock * ele1, const hashBlock * ele2){
-    if (ele1->data.num_occurrences > ele2->data.num_occurrences){
+    if (a1 > a2){
         return 1;
     }
-    else if (ele2->data.num_occurrences > ele1->data.num_occurrences){
+    else if (a2 > a1){
         return -1;
     }
     else{
-        if (ele1->data.indice > ele2->data.indice){
+        if (a1 > a2){
             return -1;
         }
-        else if (ele2->data.indice > ele1->data.indice){
+        else if (a2 > a1){
             return 1;
         }
         else{
@@ -142,7 +152,7 @@ void sort(){
 int main() {
     //struct hashBlock* hashArray;
  //   clock_t start = clock();
-    int i;
+    int i = 0;
     int counter = 0;
     hashBlock * item;
     data_t data;
@@ -180,13 +190,21 @@ int main() {
     }
     //  bubbleSort(hashArray);
     //print();
-    for (i=0; i<ind;i++){
-        sort();
-    }
-    //qsort(hashArray, value, sizeof(hashBlock), comp);
+  //  for (i=0; i<ind;i++){
+   //     sort();
+
+
+   //while(hashArray[ind] != NULL){
+     //  counter++;
+       //i++;
+  // }
+ // counter = sizeof hashArray / sizeof hashArray[0];
+
+    qsort(hashArray[0], ind, sizeof(hashBlock[0]), comp);
     print();
+    }
  //   clock_t stop = clock();
   //  double elapsed = (double)(stop - start) / CLOCKS_PER_SEC;
   //  printf("\nTime elapsed: %.5f\n", elapsed);
-}
+
 
