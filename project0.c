@@ -51,7 +51,7 @@ hashBlock * search(char * key) {    //searches for a given key
     return NULL;
 }
 
-void insert(char * key, data_t * data) {     //slap them values in yeehaw
+void insert(char * key, data_t * data, int * count) {     //slap them values in yeehaw
     //allocate memory for the new item in the hash array
     hashBlock * new_item = malloc(sizeof(hashBlock));
     //  int counter = 0; //track number of occupied cells for sorting
@@ -72,7 +72,7 @@ void insert(char * key, data_t * data) {     //slap them values in yeehaw
         //wrap around the table
         ind %= SIZE;
     }
-	
+    (*count)++;
    hashArray[ind] = new_item;
 }
 
@@ -120,10 +120,10 @@ int comp (const hashBlock * ele1, const hashBlock * ele2){
     }
 }
 
-/*void sort(){
+void sort(int count){
     int i,j,c,k;
     
-    for (i=0; i<SIZE; i++){
+    for (i=0; i<count; i++){
         if (hashArray[i] != NULL){
             for (j=0; j<SIZE; j++){
                 if (hashArray[j] != NULL){ //two non-null entries have been found
@@ -135,7 +135,7 @@ int comp (const hashBlock * ele1, const hashBlock * ele2){
         }
     }
 }
-*/
+
 int main() {
     //struct hashBlock* hashArray;
     int i;
@@ -169,16 +169,16 @@ int main() {
         else { //the character doesn't exist yet
             data.num_occurrences = 1;
             data.indice = ind;
-            insert(c, &data);
+            insert(c, &data, &counter);
             //value = value + insert(c, 1);
         }
 
     }
     //  bubbleSort(hashArray);
     //print();
-   // for (i=0; i<ind;i++){
-   //     sort();
-  //  }
+    for (i=0; i<ind;i++){
+        sort(counter);
+    }
     //qsort(hashArray, value, sizeof(hashBlock), comp);
     print();
 }
