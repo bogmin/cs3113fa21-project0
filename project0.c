@@ -81,7 +81,7 @@ void print() {	//prints out the hash table in a sorted manner
     int i;
     for (i = 0; i < SIZE; i++) {
         if (hashArray[i] != NULL) {
-            printf("%s->%d,%d\n", hashArray[i]->key, hashArray[i]->data.num_occurrences,hashArray[i]->data.indice);
+            printf("%s->%d\n", hashArray[i]->key, hashArray[i]->data.num_occurrences);
         }
     }
 }
@@ -139,7 +139,7 @@ void sort(){
 int main() {
     //struct hashBlock* hashArray;
     int i;
-  //  int counter = 0;
+    int counter = 0;
     hashBlock * item;
     data_t data;
 
