@@ -125,7 +125,7 @@ void sort(int count){
     
     for (i=0; i<count; i++){
         if (hashArray[i] != NULL){
-            for (j=0; j<SIZE; j++){
+            for (j=0; j<count; j++){
                 if (hashArray[j] != NULL){ //two non-null entries have been found
                     if (comp(hashArray[i],hashArray[j]) == 1){
                         swap(i,j);
