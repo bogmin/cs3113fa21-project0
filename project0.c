@@ -86,60 +86,33 @@ void print() {	//prints out the hash table in a sorted manner
     }
 }
 
-void swap(int ind1, int ind2){
-    hashBlock * temp;
-    if ((hashArray[ind1] == NULL) || (hashArray[ind2] == NULL)){
-        return;
-    }
-    else {
-        temp = hashArray[ind1];
-        hashArray[ind1] = hashArray[ind2];
-        hashArray[ind2] = temp;
-    } 
-}
-
-
-
 int comp (const void * ele1, const void * ele2){
-      hashBlock *a1 = (hashBlock *)ele1;
-     hashBlock *a2 = (hashBlock *)ele2;
-   // int a1 = ((struct hashBlock *)ele1)->data.num_occurrences;
-   // int a2 = ((struct hashBlock *)ele2)->data.num_occurrences;
+    //ele1 is a pointer to a pointer
+    void **a1p = (void **)ele1;
+    hashBlock *a1 = (hashBlock *)(*a1p);
+    //hashBlock *a1 = (hashBlock *)ele1;
+    
+    void **a2p = (void **)ele2;
+    hashBlock *a2 = (hashBlock *)(*a2p);
 
-  /*  if (a1->data.num_occurrences > a2->data.num_occurrences){
-        return 1;
+    if (a1->data.num_occurrences > a2->data.num_occurrences){
+        return -1;
     }
     else if (a2->data.num_occurrences > a1->data.num_occurrences){
-        return -1;
+        return 1;
     }
     else{
         if (a1->data.indice > a2->data.indice){
-            return -1;
+            return 1;
         }
         else if (a2->data.indice > a1->data.indice){
-            return 1;
+            return -1;
         }
         else{
             return 0;
         }
-    }*/
-  return (a2->data.indice - a1->data.indice);
-}
-
-void sort(int length){
-    int i,j;
-    
-    for (i=0; i<length; i++){
-        if (hashArray[i] != NULL){
-            for (j=0; j<length; j++){
-                if (hashArray[j] != NULL){ //two non-null entries have been found
-                    if (comp(hashArray[i],hashArray[j]) == 1){
-                        swap(i,j);
-                    }
-                }
-            }
-        }
     }
+  //return (a2->data.indice - a1->data.indice);
 }
 
 int main() {
@@ -176,6 +149,7 @@ int main() {
         else { //the character doesn't exist yet
             data.num_occurrences = 1;
             data.indice = tracka;
+            tracka++;
             insert(c, &data);
             //value = value + insert(c, 1);
         }
@@ -185,12 +159,8 @@ int main() {
     //print();
  //   for (i=0; i<ind;i++){
    //     sort(ind);
-    while(hashArray[i] != NULL){
-        i++;
-        counter++;
-    }
-    qsort(hashArray, counter, sizeof(hashBlock), comp);
+    qsort(hashArray, tracka, sizeof(void*), comp);
     print();
-    }
+}
 
 
