@@ -35,7 +35,7 @@ uint64_t key_to_int(char * key_arr_ptr) {
 
 hashBlock * search(char * key) {    //searches for a given key
     uint64_t key_int = key_to_int(key);
-    uint64_t ind = HASH_CODE(key_int); //get a valid index from the provided key
+    uint64_t ind = 0; //get a valid index from the provided key
 
     //move in array until an empty
     while (hashArray[ind] != NULL) {
@@ -45,7 +45,6 @@ hashBlock * search(char * key) {    //searches for a given key
         }
 
         ind++; //go to the next index
-        ind %= SIZE;
     }
 
     return NULL;
@@ -62,7 +61,7 @@ void insert(char * key, data_t * data) {     //slap them values in yeehaw
 
    //get the hash index
    uint64_t key_int = key_to_int(key); //turn the key into an integer representation
-   uint64_t ind = HASH_CODE(key_int); //get the hash index for this key value
+   uint64_t ind = 0; //get the hash index for this key value
 
     //move in array until an empty or deleted cell
     while(hashArray[ind] != NULL) {
@@ -72,7 +71,6 @@ void insert(char * key, data_t * data) {     //slap them values in yeehaw
         }
         //go to next cell
         ++ind;
-        ind %= SIZE;
     }
 	
    hashArray[ind] = new_item;
@@ -124,6 +122,7 @@ int main() {
     hashBlock * item;
     data_t data;
     int tracka = 0;
+    int valid_bytes = 0;
 
     char c[5];
     int ind = 0;
@@ -131,17 +130,32 @@ int main() {
     while (!feof(stdin)){
         ind++;
         memset(c, 0, sizeof(c)); //clear the previous contents of c
+        
+        scanf("%c", &c[0]);
+        if ((c[0] & 0x80) == 0) { //this unicode character is only one byte
+            valid_bytes = 1;
 
-        scanf("%c",&c[0]);
-        if ((int) c[0] > 239){
-            scanf("%3s", &c[1]);
         }
-        else if ((int) c[0] > 223){
-            scanf("%2s", &c[1]);
-        }
-        else if((int) c[0] > 191){
+        else if ((c[0] & 0xC0) == 0x80) { //this unicode character is two bytes
             scanf("%c", &c[1]);
+            valid_bytes = 2;
+
         }
+        else if ((c[0] & 0xE0) == 0xC0) { //this unicode character is three bytes
+            scanf("%c", &c[1]);
+            scanf("%c", &c[2]);
+            valid_bytes = 3;
+        }
+        else if ((c[0] & 0xF0) == 0xE0) { //this unicode character is four bytes
+            scanf("%c", &c[1]);
+            scanf("%c", &c[2]);
+            scanf("%c", &c[3]);
+            valid_bytes = 4;
+
+        }
+      //  else { //this is an error case
+        //    printf("Error: invalid unicode byte detected\n");
+        //}
 
         item = search(c);
         if (item != NULL) {
@@ -164,5 +178,7 @@ int main() {
     qsort(hashArray, tracka, sizeof(void*), comp);
     print();
 }
+
+
 
 
