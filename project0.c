@@ -57,6 +57,7 @@ void insert(char * key, data_t * data) {     //slap them values in yeehaw
 
     //copy the data passed in, into the new item
     memcpy(&new_item->data, data, sizeof(data_t));
+    memset(new_item->key, 0, 5);
     memcpy(new_item->key, key, 5);
 
    //get the hash index
@@ -84,6 +85,18 @@ void print() {	//prints out the hash table in a sorted manner
             printf("%s->%d\n", hashArray[i]->key, hashArray[i]->data.num_occurrences);
         }
     }
+}
+
+void swap(int ind1, int ind2){
+    hashBlock * temp;
+    if ((hashArray[ind1] == NULL) || (hashArray[ind2] == NULL)){
+        return;
+    }
+    else {
+        temp = hashArray[ind1];
+        hashArray[ind1] = hashArray[ind2];
+        hashArray[ind2] = temp;
+    } 
 }
 
 int comp (const void * ele1, const void * ele2){
@@ -122,40 +135,33 @@ int main() {
     hashBlock * item;
     data_t data;
     int tracka = 0;
-    int valid_bytes = 0;
 
-    char* c = malloc(5*sizeof(char));
+    char c[5];
     int ind = 0;
 
     while (!feof(stdin)){
         ind++;
-        memset(c, 0, 5); //clear the previous contents of c
+        memset(c, 0, sizeof(c)); //clear the previous contents of c
         
         scanf("%c", &c[0]);
         if ((c[0] & 0x80) == 0) { //this unicode character is only one byte
-            valid_bytes = 1;
+            //valid_bytes = 1;
 
         }
-        else if ((c[0] & 0xC0) == 0x80) { //this unicode character is two bytes
+        else if ((c[0] & 0xE0) == 0xC0) { //this unicode character is two bytes
             scanf("%c", &c[1]);
-            valid_bytes = 2;
 
         }
-        else if ((c[0] & 0xE0) == 0xC0) { //this unicode character is three bytes
-            scanf("%c", &c[1]);
-            scanf("%c", &c[2]);
-            valid_bytes = 3;
+        else if ((c[0] & 0xF0) == 0xE0) { //this unicode character is three bytes
+            scanf("%2c", &c[1]);
         }
-        else if ((c[0] & 0xF0) == 0xE0) { //this unicode character is four bytes
-            scanf("%c", &c[1]);
-            scanf("%c", &c[2]);
-            scanf("%c", &c[3]);
-            valid_bytes = 4;
+        else if ((c[0] & 0xF8) == 0xF0) { //this unicode character is four bytes
+            scanf("%3c", &c[1]);
 
         }
-      //  else { //this is an error case
-        //    printf("Error: invalid unicode byte detected\n");
-        //}
+        else { //this is an error case
+            printf("Error: invalid unicode byte detected\n");
+        }
 
         item = search(c);
         if (item != NULL) {
@@ -175,7 +181,7 @@ int main() {
     //print();
  //   for (i=0; i<ind;i++){
    //     sort(ind);
-    qsort(hashArray, tracka, sizeof(hashArray[0]), comp);
+    qsort(hashArray, tracka, sizeof(void*), comp);
     print();
 }
 
