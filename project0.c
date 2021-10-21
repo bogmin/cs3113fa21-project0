@@ -124,12 +124,12 @@ int main() {
     int tracka = 0;
     int valid_bytes = 0;
 
-    char c[5];
+    char* c = malloc(5*sizeof(char));
     int ind = 0;
 
     while (!feof(stdin)){
         ind++;
-        memset(c, 0, sizeof(c)); //clear the previous contents of c
+        memset(c, 0, 5); //clear the previous contents of c
         
         scanf("%c", &c[0]);
         if ((c[0] & 0x80) == 0) { //this unicode character is only one byte
