@@ -175,7 +175,7 @@ int main() {
     //print();
  //   for (i=0; i<ind;i++){
    //     sort(ind);
-    qsort(hashArray, tracka, sizeof(void*), comp);
+    qsort(hashArray, tracka, sizeof(hashArray[0]), comp);
     print();
 }
 
