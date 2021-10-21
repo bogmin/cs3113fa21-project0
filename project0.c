@@ -35,7 +35,7 @@ uint64_t key_to_int(char * key_arr_ptr) {
 
 hashBlock * search(char * key) {    //searches for a given key
     uint64_t key_int = key_to_int(key);
-    uint64_t ind = 0; //get a valid index from the provided key
+    uint64_t ind = HASH_CODE(key_int); //get a valid index from the provided key
 
     //move in array until an empty
     while (hashArray[ind] != NULL) {
@@ -61,7 +61,7 @@ void insert(char * key, data_t * data) {     //slap them values in yeehaw
 
    //get the hash index
    uint64_t key_int = key_to_int(key); //turn the key into an integer representation
-   uint64_t ind = 0; //get the hash index for this key value
+    uint64_t ind = HASH_CODE(key_int); //get the hash index for this key value
 
     //move in array until an empty or deleted cell
     while(hashArray[ind] != NULL) {
@@ -71,6 +71,7 @@ void insert(char * key, data_t * data) {     //slap them values in yeehaw
         }
         //go to next cell
         ++ind;
+        ind %= SIZE;
     }
 	
    hashArray[ind] = new_item;
